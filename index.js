@@ -64,19 +64,40 @@ const svg = d3.select('#main')
        .attr('data-date',d=>d[0])
        .attr('data-gdp',d=>d[1])
        .attr('fill','rgb(51, 173, 255)')
-       .on('mouseover',function(){
-         
+       .on('mouseover',function(event,d){
+            tooltip.attr('data-date', d[0])
+                   .style('top','500px')
+                   .style('left',event.clientX + 30+ 'px')
+                   .text('hola');
+               d3.select(this)
+                 .attr('fill','rgb(255, 255, 255)')
+                 
+       })
+       .on('mouseout',function(event,d){
+                
+            d3.select(this)
+              .attr('fill','rgb(51, 173, 255)')
+   
        })
 
 }
-
-const body=d3.select('body')
-             .style('background-color','#064D81')
-             .style('margin','0')
-             .style('padding','0')
-             .style('width','100vw')
-             .style('height','100vh')
-             .attr('class','d-flex justify-content-center align-items-center');
+const tooltip = d3.select('#main')
+                  .append('div')
+                  .attr('id','tooltip')
+                  .style('position','absolute')
+                  .style('width','120px')
+                  .style('height','50px')
+                  .style('box-shadow','0 0 10px 1px black')
+                  .style('border-radius','2px')
+                  .style('background-color','rgb(90,126,137,0.7)')
+                  
+const body = d3.select('body')
+              .style('background-color','#064D81')
+              .style('margin','0')
+              .style('padding','0')
+              .style('width','100vw')
+              .style('height','100vh')
+              .attr('class','d-flex justify-content-center align-items-center');
              
 const title = d3.select('#title')
                 .style('margin','0')
