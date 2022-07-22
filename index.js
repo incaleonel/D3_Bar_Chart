@@ -11,7 +11,8 @@ req.send();
 req.onload = function(){
     const json = JSON.parse(req.responseText);
     const dateMin = new Date(json.from_date + 'T00:00:00');
-    const dateMax = new Date(json.to_date + 'T00:00:00')
+    const dateMax = new Date(json.to_date + 'T00:00:00');
+   
     
     const xScale = d3.scaleTime()
                      .domain([ dateMin , dateMax ])
@@ -26,6 +27,7 @@ req.onload = function(){
                     
 const svg = d3.select('#main')
               .style('background-color','white')
+              .style('box-shadow','0 0 20px 1px black')
               .append('svg')
               .attr('width',w)
               .attr('height',h);
@@ -65,16 +67,23 @@ const svg = d3.select('#main')
        .attr('data-gdp',d=>d[1])
        .attr('fill','rgb(51, 173, 255)')
        .on('mouseover',function(event,d){
+         const date = new Date(d[0] + 'T00:00:00');
             tooltip.attr('data-date', d[0])
-                   .style('top','500px')
-                   .style('left',event.clientX + 30+ 'px')
-                   .text('hola');
+                   .style('top','60vh')
+                   .style('left',event.clientX + 30 + 'px')
+                   .style('text-align','center')
+                   .style('visibility','visible')
+                   .html(function(){
+                     return date.getFullYear()+' Q'+ (date.getMonth()/3 + 1) 
+                            + '<br>'
+                            + '$' + d[1] + ' Billion'});
+
                d3.select(this)
                  .attr('fill','rgb(255, 255, 255)')
                  
        })
        .on('mouseout',function(event,d){
-                
+            tooltip.style('visibility','hidden')
             d3.select(this)
               .attr('fill','rgb(51, 173, 255)')
    
@@ -90,6 +99,8 @@ const tooltip = d3.select('#main')
                   .style('box-shadow','0 0 10px 1px black')
                   .style('border-radius','2px')
                   .style('background-color','rgb(90,126,137,0.7)')
+                  .style('visibility','hidden')
+                  
                   
 const body = d3.select('body')
               .style('background-color','#064D81')
