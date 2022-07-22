@@ -24,7 +24,6 @@ req.onload = function(){
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
                     
-
 const svg = d3.select('#main')
               .style('background-color','white')
               .append('svg')
@@ -59,11 +58,16 @@ const svg = d3.select('#main')
        .append('rect')
        .attr('class','bar')
        .attr('x',(d,i)=> padding + i*2.985)
-       .attr('y',d=>h-d[1]/70 -padding)
+       .attr('y',d=>h-d[1]/56 -padding)
        .attr('width','2.985')
-       .attr('height',(d)=>{return d[1]/70})
+       .attr('height',(d)=>{return d[1]/56})
+       .attr('data-date',d=>d[0])
+       .attr('data-gdp',d=>d[1])
+       .attr('fill','rgb(51, 173, 255)')
+       .on('mouseover',function(){
+         
+       })
 
-       
 }
 
 const body=d3.select('body')
